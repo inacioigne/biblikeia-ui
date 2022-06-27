@@ -3,14 +3,21 @@ import { Menu, Search } from "@mui/icons-material";
 
 import { useForm, Controller } from "react-hook-form";
 
+import { useRouter } from "next/router";
+
 export default function SearchBox() {
+  const router = useRouter();
+
   const { control, handleSubmit } = useForm({
     defaultValues: {
       search: "",
     },
   });
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    console.log(data);
+    router.push(`/results?q=${data.search}`);
+  };
 
   return (
     <Paper

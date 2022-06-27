@@ -33,7 +33,7 @@ MKTypography.defaultProps = {
   color: "dark",
   fontWeight: false,
   textTransform: "none",
-  verticalAlign: "unset",
+  verticalAlign: "unset", 
   textGradient: false,
   opacity: 1,
 };

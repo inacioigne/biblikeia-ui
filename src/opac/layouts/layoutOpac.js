@@ -23,7 +23,7 @@ export default function LayoutOpac({ children }) {
 
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Navbar
+      {/*   <Navbar
           routes={routes}
           action={{
             type: "external",
@@ -32,7 +32,7 @@ export default function LayoutOpac({ children }) {
             color: "info",
           }}
           sticky
-        />
+        /> */}
         <main>{children}</main>
       </ThemeProvider>
     </>

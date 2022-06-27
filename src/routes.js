@@ -3,42 +3,55 @@ import Icon from "@mui/material/Icon";
 
 // @mui icons
 import GitHubIcon from "@mui/icons-material/GitHub";
+import {CoPresent, Grass} from "@mui/icons-material";
+
 
 const routes = [
-    {
-        name: "pages",
-        icon: <Icon>dashboard</Icon>,
-        columns: 1,
-        rowsPerColumn: 2,
+  {
+    name: "Serviços",
+    icon: <CoPresent />,
+    collapse: [
+      {
+        name: 'Ficha catalográfica'
+
+      }
+      
+    ]
+  },
+  {
+    name: "pages",
+    icon: <Icon>dashboard</Icon>,
+    columns: 1,
+    rowsPerColumn: 2,
+    collapse: [
+      {
+        name: "landing pages",
         collapse: [
           {
-            name: "landing pages",
-            collapse: [
-              {
-                name: "about us",
-                route: "/pages/landing-pages/about-us",
-                //component: <AboutUs />,
-              }
-            ],
-          },
-          {
-            name: "account",
-            collapse: [
-              {
-                name: "sign in",
-                route: "/pages/authentication/sign-in",
-                //component: <SignIn />,
-              },
-            ],
+            name: "about us",
+            route: "/pages/landing-pages/about-us",
+            //component: <AboutUs />,
           },
         ],
       },
       {
-        name: "github",
-        icon: <GitHubIcon />,
-        //href: "https://www.github.com/creativetimofficial/material-kit-react",
-        href: "https://github.com/inacioigne/bibliokeia-ui"
-      }
-]
+        name: "account",
+        collapse: [
+          {
+            name: "sign in",
+            route: "/pages/authentication/sign-in",
+            //component: <SignIn />,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: "INPA",
+    icon: <Grass />,
+    href: "https://www.gov.br/inpa/pt-br",
+   //href: "https://github.com/inacioigne/bibliokeia-ui",
+  },
+];
 
 export default routes;

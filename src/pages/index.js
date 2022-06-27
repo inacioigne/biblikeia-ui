@@ -7,54 +7,63 @@ import LayoutOpac from "opac/layouts/layoutOpac";
 import MKBox from "opac/components/MKBox";
 import MKTypography from "opac/components/MKTypography";
 
-import { Box, Container, Grid } from "@mui/material"
+import { Box, Container, Grid, Card } from "@mui/material";
 
-// Images
-//import bgImage from "assets/images/bg-presentation.jpg";
-import SearchBox from "opac/components/SearchBox";
+// BiblioKeia components
+import SearchBox from "opac/home/SearchBox";
+import Counters from "opac/home/Counters";
 
+// Routes
+import routes from "routes";
+
+import Navbar from "opac/layouts/Navbar";
 
 export default function Home() {
-
   return (
-    <>  
-    <MKBox
+    <>
+    <Navbar
+        routes={routes}
+        action={{
+          type: "external",
+          route: "https://www.creative-tim.com/product/material-kit-react",
+          label: "login",
+          color: "info",
+        }}
+        sticky
+      />
+      <MKBox
         minHeight="75vh"
         width="100%"
         sx={{
-         backgroundImage: `url(/images/biblioteca.jpg)`,
-         //backgroundColor: 'red',
+          backgroundImage: `url(/images/biblioteca.jpg)`,
           backgroundSize: "cover",
           backgroundPosition: "top",
           display: "grid",
           placeItems: "center",
         }}
       >
-       <Container>
+        <Container>
           <Grid container item xs={12} lg={7} justifyContent="center" mx="auto">
-          <SearchBox />
-            {/* <MKTypography
-              variant="h1"
-              color="white"
-              mt={-6}
-              mb={1}
-              sx={({ breakpoints, typography: { size } }) => ({
-                [breakpoints.down("md")]: {
-                  fontSize: size["3xl"],
-                },
-              })}
-            >
-              BiblioKeia{" "}
-            </MKTypography> */}
-          
+            <SearchBox />
           </Grid>
         </Container>
-   
       </MKBox>
-    
+      <Card
+        sx={{
+          p: 2,
+          mx: { xs: 2, lg: 3 },
+          mt: -8,
+          mb: 4,
+          backgroundColor: ({ palette: { white }, functions: { rgba } }) =>
+            rgba(white.main, 0.8),
+          backdropFilter: "saturate(200%) blur(30px)",
+          boxShadow: ({ boxShadows: { xxl } }) => xxl,
+        }}
+      >
+        <Counters />
+      </Card>
 
-    
- <div className={styles.container}>
+      {/*  <div className={styles.container}>
       <main className={styles.main}>
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
@@ -108,7 +117,7 @@ export default function Home() {
           </span>
         </a>
       </footer>
-    </div> 
+    </div>  */}
     </>
   );
 }

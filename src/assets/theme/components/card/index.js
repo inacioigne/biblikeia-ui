@@ -39,6 +39,7 @@ export default {
       borderRadius: borderRadius.xl,
       boxShadow: md,
       overflow: "visible",
+      height: 'fitContent'
     },
   },
 };

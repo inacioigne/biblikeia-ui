@@ -35,7 +35,7 @@ export default function Home() {
         minHeight="75vh"
         width="100%"
         sx={{
-          backgroundImage: `url(/images/biblioteca.jpg)`,
+          backgroundImage: `url(/images/sedab.jpeg)`,
           backgroundSize: "cover",
           backgroundPosition: "top",
           display: "grid",

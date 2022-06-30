@@ -13,36 +13,83 @@ import Image from "next/image";
 
 import LayoutOpac from "opac/layouts/layoutOpac";
 
-import { Container, Grid, Box } from "@mui/material";
+import { useForm, Controller } from "react-hook-form";
+
+import {
+  Container,
+  Accordion,
+  Box,
+  AccordionSummary,
+  Typography,
+  AccordionDetails,
+  Button,
+  Card,
+  Divider,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+  Badge,
+  Grid,
+} from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import MKTypography from "opac/components/MKTypography";
 import MKBox from "opac/components/MKBox";
-import MKBadge from "opac/components/MKBadge"
+import MKBadge from "opac/components/MKBadge";
 
+
+import CardResults from "opac/components/CardResults";
+import Assuntos from "opac/components/Facets/Assuntos";
+import Facet from "opac/components/Facets";
+import AdvancedSearch from "opac/home/SearchBox/AdvancedSearch"
 
 export default function Results() {
   const router = useRouter();
   const { q } = router.query;
 
   const [results, setResults] = useState(null);
+  const [facetAssunto, setFacetAssunto] = useState(null);
+  const [facetAutor, setFacetAutor] = useState(null);
+  const [facetYear, setFacetYear] = useState(null);
 
-  function getData() {
-    const data = { query: "*:*" };
-    //const data = { query: `termo_topico:${q}` };
+  const { handleSubmit, reset, setValue, control } = useForm();
+
+  
+  const getData = (field, assunto) => {
+    const data = {
+      query: `${field}:${assunto}`,
+      //query: `Ciencia`,
+      facet: {
+        termo_topico: {
+          field: "termo_topico_str",
+        },
+        author: {
+          field: "author_str",
+        },
+        year: {
+          field: "year",
+        },
+      },
+      limit: 10,
+    };
 
     api
       .post(`acervo/query`, data)
       .then((response) => {
-        console.log(response.data.response);
+        console.log("FT: ", response.data.facets.termo_topico);
         setResults(response.data.response);
+        setFacetAssunto(response.data.facets.termo_topico.buckets);
+        setFacetAutor(response.data.facets.author.buckets);
+        setFacetYear(response.data.facets.year.buckets);
       })
       .catch(function (error) {
         console.log(error);
       });
-  }
-
+  };
   useEffect(() => {
-    getData();
+    const field = "*";
+    const assunto = "*";
+    getData(field, assunto);
   }, []);
 
   return (
@@ -59,93 +106,86 @@ export default function Results() {
         relative
         center
       />
-      <Container>
-        <h1>Results</h1>
-        <Grid container spacing={2}>
-          <Grid item xs={4}>
-            <MKBox
-              sx={{
-                display: "flex",
-                backgroundColor: "red",
-                height: "10rem",
-              }}
-            >
-              <Box sx={{ p: "10px 10px" }}>
-                <Image
-                  src="/images/81WcnNQ-TBL.jpg"
-                  alt="Picture of the author"
-                  width={130}
-                  height={180}
+      <Container sx={{ flexGrow: 1 }}>
+        <Box sx={{ p: 5, display: 'flex', justifyContent: 'center'}}>
+        <AdvancedSearch 
+        getData={getData}
+        />
+
+        </Box>
+        
+
+        <Grid
+          container
+          spacing={{ xs: 2, md: 3 }}
+          columns={{ xs: 4, sm: 8, md: 12 }}
+        >
+          <Grid item xs={3}>
+            {/** FACET ASSSUNTOS */}
+            <Facet
+              name="Assuntos"
+              filter="termo_topico"
+              facets={facetAssunto}
+              control={control}
+              setFacetAutor={setFacetAutor}
+              setFacetYear={setFacetYear}
+              setFacetAssunto={setFacetAssunto}
+              setResults={setResults}
+              getData={getData}
+              nome="azul"
+            />
+
+            <Facet
+              name="Autores"
+              filter="author"
+              facets={facetAutor}
+              control={control}
+              setFacetAutor={setFacetAutor}
+              setFacetYear={setFacetYear}
+              setFacetAssunto={setFacetAssunto}
+              setResults={setResults}
+              getData={getData}
+              nome="amrelo"
+            />
+
+            <Facet
+              name="Ano"
+              filter="year"
+              facets={facetYear}
+              control={control}
+              setFacetAutor={setFacetAutor}
+              setFacetYear={setFacetYear}
+              setFacetAssunto={setFacetAssunto}
+              setResults={setResults}
+              getData={getData}
+              nome="red"
+            />
+          </Grid>
+
+          <Grid
+            item
+            xs={9}
+            sx={{
+              display: "grid",
+              rowGap: "3rem",
+            }}
+          >
+            {results?.docs.map((doc, index) => (
+              <Box>
+                <CardResults
+                  key={index}
+                  title={doc.title}
+                  subtitle={doc.subtitle}
+                  author={doc.author}
+                  responsibilities={doc.responsibilities}
+                  termo_topico={doc.termo_topico}
+                  year={doc.year}
                 />
               </Box>
-              <Box sx={{pt: '10px'}}>
-              <MKTypography 
-              color="text"
-              >
-                Big Magic
-              </MKTypography>
-              <MKTypography 
-              variant="h6"
-              color="warning"
-              >
-               por Elizabeth Gilbert
-              </MKTypography>
-              <MKBadge badgeContent="success" color="success" container />
-
-              </Box>
-            </MKBox>
-          </Grid>
-          <Grid item xs={4}>
-          <MKBox
-          bgColor={"info"}
-          coloredShadow={"warning"}
-              sx={{
-                display: "flex",
-                //backgroundColor: "blue",
-                height: "10rem",
-              }}
-            >
-              <Box sx={{ p: "10px 10px" }}>
-                <Image
-                  src="/images/a8b9ff74ed0f3efd97e09a7a0447f892.jpg"
-                  alt="Picture of the author"
-                  width={130}
-                  height={180}
-                />
-              </Box>
-              <Box sx={{pt: '10px'}}>
-              <MKTypography 
-              color="text"
-              >
-                Big Magic
-              </MKTypography>
-              <MKTypography 
-              variant="h6"
-              color="warning"
-              >
-               por Elizabeth Gilbert
-              </MKTypography>
-              <MKBadge badgeContent="success" color="success" container />
-
-              </Box>
-            </MKBox>
-          </Grid>
-          <Grid item xs={4}>
-            <Box
-              sx={{
-                backgroundColor: "brown",
-                height: "10rem",
-              }}
-            >
-              BOX3
-            </Box>
+            ))}
           </Grid>
         </Grid>
       </Container>
-
-      {results?.docs.map((doc) => (
-        <p key={doc.id}>{doc.title}</p>
-      ))}
     </>
   );
 }

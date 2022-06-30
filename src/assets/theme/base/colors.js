@@ -79,7 +79,7 @@ export default {
     focus: "#f0f2f5",
   },
 
-  dark: {
+  dark: { 
     main: "#344767",
     focus: "#2c3c58",
   },

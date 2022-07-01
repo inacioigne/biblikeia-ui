@@ -37,11 +37,10 @@ import MKTypography from "opac/components/MKTypography";
 import MKBox from "opac/components/MKBox";
 import MKBadge from "opac/components/MKBadge";
 
-
 import CardResults from "opac/components/CardResults";
 import Assuntos from "opac/components/Facets/Assuntos";
 import Facet from "opac/components/Facets";
-import AdvancedSearch from "opac/home/SearchBox/AdvancedSearch"
+import AdvancedSearch from "opac/home/SearchBox/AdvancedSearch";
 
 export default function Results() {
   const router = useRouter();
@@ -54,7 +53,6 @@ export default function Results() {
 
   const { handleSubmit, reset, setValue, control } = useForm();
 
-  
   const getData = (field, assunto) => {
     const data = {
       query: `${field}:${assunto}`,
@@ -107,13 +105,9 @@ export default function Results() {
         center
       />
       <Container sx={{ flexGrow: 1 }}>
-        <Box sx={{ p: 5, display: 'flex', justifyContent: 'center'}}>
-        <AdvancedSearch 
-        getData={getData}
-        />
-
+        <Box sx={{ p: 5, display: "flex", justifyContent: "center" }}>
+          <AdvancedSearch getData={getData} />
         </Box>
-        
 
         <Grid
           container
@@ -170,10 +164,11 @@ export default function Results() {
               rowGap: "3rem",
             }}
           >
-            {results?.docs.map((doc, index) => (
+            {results?.docs.map((doc) => (
               <Box>
                 <CardResults
-                  key={index}
+                  key={doc.id}
+                  id={doc.id}
                   title={doc.title}
                   subtitle={doc.subtitle}
                   author={doc.author}

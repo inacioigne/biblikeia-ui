@@ -29,15 +29,15 @@ export default function CardResults({
   responsibilities,
   termo_topico,
   year,
+  id
 }) {
   return (
-    <Card >
+    <Card>
       <Box
         sx={{
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
-    
         }}
       >
         <Box>
@@ -119,13 +119,12 @@ export default function CardResults({
             mt: "-15px",
             //p: "10px 10px",
             pr: "20px",
-            //boxShadow: '-2px 6px 19px 0px #7f818e',
             transition: ".3s ease",
             "&:hover": { transform: "scale(1.03)" },
           }}
         >
           <Image
-            src="/images/81WcnNQ-TBL.jpg"
+            src={`http://localhost:8000/cataloguing/item/${id}/imagem`}
             layout="fixed"
             width={130}
             height={180}
@@ -134,10 +133,10 @@ export default function CardResults({
       </Box>
       <Divider sx={{ m: 0, pb: 0 }} />
       <CardActions>
-        <MKButton  size="small" variant="outlined" color="info">
-        Chamada: 587.2 B522s
+        <MKButton size="small" variant="outlined" color="info">
+          Chamada: 587.2 B522s
         </MKButton>
-       
+
         <MKButton
           sx={{ ml: 3, mt: 0 }}
           size="small"

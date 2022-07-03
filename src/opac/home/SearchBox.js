@@ -16,7 +16,7 @@ export default function SearchBox() {
 
   const onSubmit = (data) => {
     console.log(data);
-    router.push(`/results?q=${data.search}`);
+    router.push(`/opac/results?q=${data.search}`);
   };
 
   return (

@@ -42,6 +42,7 @@ import Assuntos from "opac/components/Facets/Assuntos";
 import Facet from "opac/components/Facets";
 import AdvancedSearch from "opac/home/SearchBox/AdvancedSearch";
 
+
 export default function Results() {
   const router = useRouter();
   const { q } = router.query;
@@ -50,8 +51,11 @@ export default function Results() {
   const [facetAssunto, setFacetAssunto] = useState(null);
   const [facetAutor, setFacetAutor] = useState(null);
   const [facetYear, setFacetYear] = useState(null);
+ 
 
   const { handleSubmit, reset, setValue, control } = useForm();
+
+
 
   const getData = (field, assunto) => {
     const data = {
@@ -72,7 +76,7 @@ export default function Results() {
     };
 
     api
-      .post(`acervo/query`, data)
+      .post(`query`, data)
       .then((response) => {
         console.log("FT: ", response.data.facets.termo_topico);
         setResults(response.data.response);
@@ -92,6 +96,9 @@ export default function Results() {
 
   return (
     <>
+    <MKBox variant="gradient" bgColor="dark" shadow="sm" py={0.25}>
+
+    
       <Navbar
         routes={routes}
         action={{
@@ -102,8 +109,10 @@ export default function Results() {
         }}
         transparent
         relative
+        light
         center
       />
+      </MKBox>
       <Container sx={{ flexGrow: 1 }}>
         <Box sx={{ p: 5, display: "flex", justifyContent: "center" }}>
           <AdvancedSearch getData={getData} />
@@ -175,6 +184,7 @@ export default function Results() {
                   responsibilities={doc.responsibilities}
                   termo_topico={doc.termo_topico}
                   year={doc.year}
+                  call={doc.call}
                 />
               </Box>
             ))}

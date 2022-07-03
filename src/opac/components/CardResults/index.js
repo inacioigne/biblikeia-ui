@@ -21,6 +21,8 @@ import {
 } from "@mui/material";
 import { red } from "@mui/material/colors";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import Details from "./Details";
+import { useState } from "react";
 
 export default function CardResults({
   title,
@@ -29,9 +31,16 @@ export default function CardResults({
   responsibilities,
   termo_topico,
   year,
-  id
+  id,
+  call
 }) {
+   //MODAL
+   const [open, setOpen] = useState(false);
+
   return (
+    <>
+
+    
     <Card>
       <Box
         sx={{
@@ -117,7 +126,6 @@ export default function CardResults({
         <Box
           sx={{
             mt: "-15px",
-            //p: "10px 10px",
             pr: "20px",
             transition: ".3s ease",
             "&:hover": { transform: "scale(1.03)" },
@@ -134,7 +142,7 @@ export default function CardResults({
       <Divider sx={{ m: 0, pb: 0 }} />
       <CardActions>
         <MKButton size="small" variant="outlined" color="info">
-          Chamada: 587.2 B522s
+          {`Chamada: ${call}`}
         </MKButton>
 
         <MKButton
@@ -143,10 +151,17 @@ export default function CardResults({
           variant="gradient"
           color="info"
           endIcon={<ArrowForwardIosIcon />}
+          onClick={() => {setOpen(true)}}
         >
           Detalhes
         </MKButton>
       </CardActions>
     </Card>
+    <Details 
+      open={open}
+      setOpen={setOpen}
+      itemId={id}
+    />
+    </>
   );
 }

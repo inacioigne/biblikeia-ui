@@ -6,7 +6,19 @@ import {
   DialogActions,
   Button,
   Box,
+  Typography,
+  IconButton,
+  Badge,
 } from "@mui/material";
+import Icon from "@mui/material/Icon";
+import {
+  AutoStoriesOutlined,
+  MapsHomeWorkOutlined,
+  Kitchen,
+  Language
+} from "@mui/icons-material";
+
+import Image from "next/image";
 
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
@@ -51,25 +63,155 @@ export default function Details({ open, setOpen, itemId }) {
       aria-labelledby="responsive-dialog-title"
       maxWidth={"xl"}
     >
-      <DialogTitle id="responsive-dialog-title">
-        {item?.datafields["245"].subfields.a}
+      <DialogTitle  id="responsive-dialog-title">
+        {item?.datafields["245"].subfields.a}{item?.datafields["245"].subfields.b && item?.datafields["245"].subfields.a}
       </DialogTitle>
-      <DialogContent>
-        <DialogContentText>
+      
+      <DialogContent dividers>
+      <Box sx={{ display: 'flex'}}>
+        
+       
+        <Image 
+          src={`http://localhost:8000/cataloguing/item/${itemId}/imagem`}
+          alt="Book cover"
+          width={150}
+          height={200}
+        />
+        <DialogContentText ml={2}>
           <Box sx={{ display: "flex" }}>
-            <MKTypography mr={2}>Autoria:</MKTypography>
-            <MKTypography>{item?.datafields["245"].subfields.c}</MKTypography>
+            <Typography mr={1} sx={{ fontWeight: "bold" }} variant="subtitle2">
+              Autoria:
+            </Typography>
+            <Typography variant="body2">
+              {item?.datafields["245"].subfields.c}
+            </Typography>
           </Box>
           <Box sx={{ display: "flex" }}>
-            <MKTypography mr={2}>Publicação:</MKTypography>
-            <MKTypography>
-            {item?.datafields["260"].subfields.a}
-            {item?.datafields["260"].subfields.b}
-            {item?.datafields["260"].subfields.c}
-            </MKTypography>
+            <Typography mr={1} sx={{ fontWeight: "bold" }} variant="subtitle2">
+              Publicação:
+            </Typography>
+            <Typography variant="body2">
+              {item?.datafields["260"].subfields.a}
+              {item?.datafields["260"].subfields.b}
+              {item?.datafields["260"].subfields.c}
+            </Typography>
           </Box>
-         
+          {item?.datafields["490"] && (
+            <Box sx={{ display: "flex" }}>
+              <Typography
+                mr={1}
+                sx={{ fontWeight: "bold" }}
+                variant="subtitle2"
+              >
+                Série:
+              </Typography>
+              <Typography variant="body2">
+                {item?.datafields["490"].subfields.a}
+                {item?.datafields["490"].subfields.v}
+              </Typography>
+            </Box>
+          )}
+          {item?.datafields["500"] && (
+            <Box sx={{ display: "flex" }}>
+              <Typography
+                mr={1}
+                sx={{ fontWeight: "bold" }}
+                variant="subtitle2"
+              >
+                Notas:
+              </Typography>
+              <Typography variant="body2">
+                {item?.datafields["500"].subfields.a}
+              </Typography>
+            </Box>
+          )}
+          <Box sx={{ display: "flex" }}>
+            <Typography mr={1} sx={{ fontWeight: "bold" }} variant="subtitle2">
+              Assuntos:
+            </Typography>
+
+            {item?.datafields["650"].map((assunto) => (
+              <Box
+                sx={{
+                  bgcolor: "primary.main",
+                  color: "white.main",
+                  boxShadow: 1,
+                  borderRadius: 2,
+                  pl: 1,
+                  pr: 1,
+                  mr: 1,
+                }}
+              >
+                {assunto.subfields.a}
+              </Box>
+            ))}
+          </Box>
+          
         </DialogContentText>
+        </Box>
+        <Box sx={{ display: "flex", m: 2 }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "space-between"
+              }}
+            >
+              <Typography variant="caption">Páginas</Typography>
+              <IconButton sx={{ fontSize: "2rem" }}>
+                <AutoStoriesOutlined />
+              </IconButton>
+              <Typography variant="caption">
+                {item?.datafields["300"].subfields.a}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <Typography variant="caption">Idioma</Typography>
+              <IconButton sx={{ fontSize: "2rem" }}>
+                <Language />
+              </IconButton>
+              <Typography variant="caption">
+                Português
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <Typography variant="caption">Editora</Typography>
+              <IconButton sx={{ fontSize: "2rem" }}>
+                <MapsHomeWorkOutlined />
+              </IconButton>
+              <Typography variant="caption">
+                {item?.datafields["260"].subfields.b}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <Typography variant="caption">Estante</Typography>
+              <IconButton sx={{ fontSize: "2rem" }}>
+                <Kitchen />
+              </IconButton>
+              <Typography variant="caption">
+                {item?.datafields["852"].subfields.c}
+              </Typography>
+            </Box>
+          </Box>
       </DialogContent>
       <DialogActions>
         <Button autoFocus onClick={handleClose}>

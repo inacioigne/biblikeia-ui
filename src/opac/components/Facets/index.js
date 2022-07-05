@@ -57,8 +57,8 @@ export default function Facet({
                      //console.log('F:',filter);                     
                      getData(filter, e.target.id)
                    }}
-                   //checked={field.value}
-                   id={facet.val}
+           
+                   id={facet.val.toString()}
                  />
                }
                label={

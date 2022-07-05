@@ -100,7 +100,7 @@ export default function Details({ open, setOpen, itemId }) {
                 {item?.datafields["245"].subfields.c}
               </Typography>
             </Box>
-            {/*
+           
             <Box sx={{ display: "flex" }}>
               <Typography
                 mr={1}
@@ -116,7 +116,7 @@ export default function Details({ open, setOpen, itemId }) {
                 {item?.datafields["260"].subfields.c}
               </Typography>
             </Box>
-             
+              {/*
             {item?.datafields["490"] && (
               <Box sx={{ display: "flex" }}>
                 <Typography
